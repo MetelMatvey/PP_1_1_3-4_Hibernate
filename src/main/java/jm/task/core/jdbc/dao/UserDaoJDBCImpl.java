@@ -2,7 +2,6 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +10,9 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     Connection connection = getConnection();
     public UserDaoJDBCImpl() {
-
     }
 
-    public void createUsersTable() {
+   public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
             String sqlQ = "CREATE TABLE IF NOT EXISTS users.users (\n" +
                     "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
@@ -26,8 +24,8 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         } catch (SQLException e) {
             System.out.println("Ошибка при добавлении таблицы.");
         }
-    }
-
+ }
+//
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
                 String sqlQ = "DROP TABLE IF EXISTS users;";
@@ -36,19 +34,19 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             System.out.println("Ошибка при удалении таблицы.");
         }
     }
-
+//
     public void saveUser(String name, String lastName, byte age) {
         String sqlQ = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)";
         try (PreparedStatement preparedstatement = connection.prepareStatement(sqlQ)) {
                 preparedstatement.setString(1, name);
                 preparedstatement.setString(2, lastName);
-                preparedstatement.setLong(3,(byte) age);
+                preparedstatement.setLong(3, age);
                 preparedstatement.executeUpdate();
         } catch (SQLException e) {
                 System.out.println("Ошибка при добавлении пользователя.");
             }
     }
-
+//
     public void removeUserById(long id) {
         String sqlQ = "DELETE FROM users WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQ)) {
@@ -58,7 +56,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             System.out.println("Ошибка при удалении пользователя.");
         }
     }
-
+//
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
         String sqlQ = "SELECT * FROM users";
@@ -75,9 +73,9 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         } catch (SQLException e) {
             System.out.println("Ошибка при получении пользователей.");
         }
-        return userList;
+        return null;
     }
-
+//
     public void cleanUsersTable() {
         String sqlQ = "TRUNCATE TABLE users.users;";
         try (Statement statement = connection.createStatement()) {
@@ -85,5 +83,5 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         } catch (SQLException e) {
             System.out.println("Ошибка при очистке таблицы.");
         }
-    }
+   }
 }
